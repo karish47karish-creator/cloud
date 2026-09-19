@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Cloud Dashboard</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+nav{
+    width:100%;
+    background:rgba(2,6,23,0.85);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 8%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    flex-wrap:wrap;
+}
+
+.logo{
+    color:#facc15;
+    font-size:28px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    flex-wrap:wrap;
+}
+
+nav ul li{
+    margin-left:20px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+    font-weight:bold;
+}
+
+nav ul li a:hover{
+    color:#facc15;
+}
+
+/* PAGE */
+
+.page{
+    display:none;
+    min-height:100vh;
+    padding:80px 8%;
+    background-size:cover;
+    background-position:center;
+}
+
+.active{
+    display:block;
+}
+
+/* HOME */
+
+#home{
+    background:
+    linear-gradient(rgba(15,23,42,0.55),rgba(15,23,42,0.55)),
+    url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600');
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero{
+    height:80vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:65px;
+    color:#facc15;
+    text-shadow:2px 2px 10px black;
+}
+
+.hero p{
+    margin-top:20px;
+    max-width:850px;
+    line-height:1.8;
+    font-size:20px;
+    text-shadow:1px 1px 5px black;
+}
+
+.btn{
+    margin-top:30px;
+    padding:15px 35px;
+    border:none;
+    border-radius:30px;
+    background:#facc15;
+    color:black;
+    font-size:18px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.4s;
+}
+
+.btn:hover{
+    transform:scale(1.08);
+    background:white;
+}
+
+/* DASHBOARD */
+
+#dashboard{
+    background:
+    linear-gradient(rgba(15,23,42,0.60),rgba(15,23,42,0.60)),
+    url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600');
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    transition:0.4s;
+}
+
+.stat-box:hover{
+    transform:translateY(-10px);
+}
+
+.stat-box i{
+    font-size:45px;
+    color:#facc15;
+}
+
+.stat-box h1{
+    margin-top:15px;
+    font-size:45px;
+}
+
+/* WORKFLOW */
+
+#workflow{
+    background:
+    linear-gradient(rgba(15,23,42,0.60),rgba(15,23,42,0.60)),
+    url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600');
+}
+
+.step{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-left:5px solid #facc15;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.step h2{
+    color:#facc15;
+    margin-bottom:10px;
+}
+
+/* SECURITY */
+
+#security{
+    background:
+    linear-gradient(rgba(15,23,42,0.55),rgba(15,23,42,0.55)),
+    url('https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600');
+}
+
+.title{
+    text-align:center;
+    color:#facc15;
+    font-size:45px;
+    margin-bottom:50px;
+    text-shadow:2px 2px 10px black;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    padding:35px;
+    border-radius:20px;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card i{
+    font-size:55px;
+    color:#facc15;
+    margin-bottom:20px;
+}
+
+.card ul{
+    margin-top:15px;
+    margin-left:20px;
+    line-height:1.9;
+}
+
+/* LOGIN PAGE */
+
+#authentication{
+    background:
+    linear-gradient(rgba(15,23,42,0.60),rgba(15,23,42,0.60)),
+    url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600');
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    margin:auto;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    padding:40px;
+    border-radius:20px;
+}
+
+.login-box input{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    font-size:16px;
+}
+
+.login-box button{
+    width:100%;
+    padding:15px;
+    margin-top:20px;
+    border:none;
+    border-radius:10px;
+    background:#facc15;
+    color:black;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#message{
+    text-align:center;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* ARROWS */
+
+.next-btn,
+.prev-btn{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    background:#facc15;
+    color:black;
+    font-size:24px;
+    cursor:pointer;
+    z-index:1000;
+}
+
+.next-btn{
+    right:20px;
+}
+
+.prev-btn{
+    left:20px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#020617;
+    text-align:center;
+    padding:25px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+nav{
+    flex-direction:column;
+}
+
+nav ul{
+    margin-top:15px;
+    justify-content:center;
+}
+
+.hero h1{
+    font-size:40px;
+}
+
+.hero p{
+    font-size:17px;
+}
+
+.title{
+    font-size:35px;
+}
+
+.next-btn,
+.prev-btn{
+    width:50px;
+    height:50px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">CloudTech</div>
+
+<ul>
+<li><a href="#" onclick="showPage('home')">Home</a></li>
+<li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+<li><a href="#" onclick="showPage('workflow')">Workflow</a></li>
+<li><a href="#" onclick="showPage('security')">Security</a></li>
+<li><a href="#" onclick="showPage('authentication')">Login</a></li>
+<li><a href="#" onclick="logout()">Logout</a></li>
+</ul>
+
+</nav>
+
+<!-- HOME -->
+
+<div id="home" class="page">
+
+<div class="hero">
+
+<h1>Secure Cloud Infrastructure Dashboard</h1>
+
+<p>
+Advanced cloud deployment workflow with scalable architecture,
+performance optimization, security implementation,
+and authentication systems.
+</p>
+
+<button class="btn"
+onclick="showPage('dashboard')">
+Explore Platform
+</button>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="page">
+
+<h1 class="title">Cloud Monitoring Dashboard</h1>
+
+<div class="dashboard">
+
+<div class="stat-box">
+<i class="fas fa-server"></i>
+<h1>99%</h1>
+<p>Server Uptime</p>
+</div>
+
+<div class="stat-box">
+<i class="fas fa-users"></i>
+<h1>15K</h1>
+<p>Active Users</p>
+</div>
+
+<div class="stat-box">
+<i class="fas fa-bolt"></i>
+<h1>70%</h1>
+<p>Performance Boost</p>
+</div>
+
+<div class="stat-box">
+<i class="fas fa-shield-alt"></i>
+<h1>24/7</h1>
+<p>Security Monitoring</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- WORKFLOW -->
+
+<div id="workflow" class="page">
+
+<h1 class="title">Deployment Workflow</h1>
+
+<div class="step">
+<h2>Step 1 - Development</h2>
+<p>Create frontend and backend applications using modern technologies.</p>
+</div>
+
+<div class="step">
+<h2>Step 2 - CI/CD Pipeline</h2>
+<p>Automate testing and deployment using Jenkins and GitHub Actions.</p>
+</div>
+
+<div class="step">
+<h2>Step 3 - Cloud Deployment</h2>
+<p>Deploy applications using AWS, Azure, and Google Cloud.</p>
+</div>
+
+<div class="step">
+<h2>Step 4 - Monitoring</h2>
+<p>Monitor server health and optimize application performance.</p>
+</div>
+
+</div>
+
+<!-- SECURITY -->
+
+<div id="security" class="page">
+
+<h1 class="title">Security Implementation</h1>
+
+<div class="container">
+
+<div class="card">
+<i class="fas fa-shield-virus"></i>
+
+<h2>XSS Prevention</h2>
+
+<ul>
+<li>Input Validation</li>
+<li>Output Encoding</li>
+<li>Content Security Policy</li>
+<li>Secure User Data</li>
+</ul>
+
+</div>
+
+<div class="card">
+<i class="fas fa-lock"></i>
+
+<h2>Rate Limiting</h2>
+
+<ul>
+<li>Prevent DDoS Attacks</li>
+<li>Traffic Control</li>
+<li>API Protection</li>
+<li>Reduced Server Load</li>
+</ul>
+
+</div>
+
+<div class="card">
+<i class="fas fa-user-secret"></i>
+
+<h2>Cyber Security</h2>
+
+<ul>
+<li>Threat Detection</li>
+<li>Encrypted Data</li>
+<li>Access Monitoring</li>
+<li>Security Alerts</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- LOGIN PAGE -->
+
+<div id="authentication" class="page active">
+
+<h1 class="title">Authentication System</h1>
+
+<div class="login-box">
+
+<h2 style="
+text-align:center;
+margin-bottom:25px;
+color:#facc15;">
+Secure Login
+</h2>
+
+<input type="email"
+id="email"
+placeholder="Enter Email ID">
+
+<input type="password"
+id="password"
+placeholder="Enter Password">
+
+<button onclick="login()">
+Login
+</button>
+
+<div id="message"></div>
+
+</div>
+
+</div>
+
+<!-- ARROWS -->
+
+<button class="next-btn" onclick="nextPage()">
+<i class="fas fa-arrow-right"></i>
+</button>
+
+<button class="prev-btn" onclick="prevPage()">
+<i class="fas fa-arrow-left"></i>
+</button>
+
+<!-- FOOTER -->
+
+<footer>
+
+<h2>NextGen Cloud Security Platform</h2>
+
+<p>Advanced Secure Deployment & Authentication System</p>
+
+</footer>
+
+<script>
+
+/* SHOW PAGE */
+
+function showPage(pageId){
+
+    let loggedIn =
+    localStorage.getItem("loggedIn");
+
+    if(loggedIn !== "true" &&
+       pageId !== "authentication"){
+
+        alert("Please login first");
+
+        return;
+    }
+
+    let pages =
+    document.querySelectorAll(".page");
+
+    pages.forEach(function(page){
+
+        page.classList.remove("active");
+
+    });
+
+    document.getElementById(pageId)
+    .classList.add("active");
+
+}
+
+/* LOGIN */
+
+function login(){
+
+    let email =
+    document.getElementById("email")
+    .value.trim();
+
+    let password =
+    document.getElementById("password")
+    .value.trim();
+
+    let message =
+    document.getElementById("message");
+
+    let emailPattern =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(email === "" || password === ""){
+
+        message.innerHTML =
+        "Please enter Email and Password";
+
+        message.style.color =
+        "orange";
+
+        return;
+    }
+
+    if(!emailPattern.test(email)){
+
+        message.innerHTML =
+        "Enter valid Email ID";
+
+        message.style.color =
+        "orange";
+
+        return;
+    }
+
+    localStorage.setItem(
+    "loggedIn",
+    "true"
+    );
+
+    localStorage.setItem(
+    "userPassword",
+    password
+    );
+
+    message.innerHTML =
+    "Login Successful";
+
+    message.style.color =
+    "lightgreen";
+
+    setTimeout(function(){
+
+        showPage('home');
+
+    },1000);
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+    let savedPassword =
+    localStorage.getItem("userPassword");
+
+    let exitPassword =
+    prompt("Enter your password to logout");
+
+    if(exitPassword === null){
+
+        return;
+    }
+
+    if(exitPassword === savedPassword){
+
+        localStorage.removeItem("loggedIn");
+
+        localStorage.removeItem("userPassword");
+
+        document.getElementById("email").value = "";
+
+        document.getElementById("password").value = "";
+
+        document.getElementById("message").innerHTML = "";
+
+        alert("Logout Successful");
+
+        showPage("authentication");
+
+    }
+    else{
+
+        alert("Incorrect Password");
+
+    }
+
+}
+
+/* PAGE ORDER */
+
+let pagesOrder = [
+    "authentication",
+    "home",
+    "dashboard",
+    "workflow",
+    "security"
+];
+
+/* NEXT PAGE */
+
+function nextPage(){
+
+    let currentPage = "";
+
+    pagesOrder.forEach(function(page){
+
+        if(document
+           .getElementById(page)
+           .classList.contains("active")){
+
+            currentPage = page;
+        }
+
+    });
+
+    let currentIndex =
+    pagesOrder.indexOf(currentPage);
+
+    let nextIndex =
+    (currentIndex + 1) % pagesOrder.length;
+
+    showPage(pagesOrder[nextIndex]);
+
+}
+
+/* PREVIOUS PAGE */
+
+function prevPage(){
+
+    let currentPage = "";
+
+    pagesOrder.forEach(function(page){
+
+        if(document
+           .getElementById(page)
+           .classList.contains("active")){
+
+            currentPage = page;
+        }
+
+    });
+
+    let currentIndex =
+    pagesOrder.indexOf(currentPage);
+
+    let prevIndex =
+    (currentIndex - 1 + pagesOrder.length)
+    % pagesOrder.length;
+
+    showPage(pagesOrder[prevIndex]);
+
+}
+
+/* OPEN LOGIN FIRST */
+
+window.onload = function(){
+
+    document.getElementById("email").value = "";
+
+    document.getElementById("password").value = "";
+
+    document.getElementById("message").innerHTML = "";
+
+    localStorage.removeItem("loggedIn");
+
+    showPage("authentication");
+
+}
+
+</script>
+
+</body>
+</html>

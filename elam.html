@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawMart - Pet Shop</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+}
+
+/* HEADER */
+
+header{
+    background:#ff914d;
+    color:white;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-size:18px;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:black;
+}
+
+/* CART */
+
+.cart-icon{
+    background:white;
+    color:#ff914d;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.cart-box{
+    position:fixed;
+    top:80px;
+    right:-400px;
+    width:350px;
+    height:80vh;
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    padding:20px;
+    transition:0.4s;
+    overflow-y:auto;
+    z-index:2000;
+    border-radius:15px;
+}
+
+.cart-box.active{
+    right:20px;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.cart-header span{
+    cursor:pointer;
+    font-size:22px;
+    color:red;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f4f4f4;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+.cart-item button{
+    background:red;
+    color:white;
+    border:none;
+    padding:5px 10px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* PAGES */
+
+.page{
+    display:none;
+    min-height:100vh;
+    padding:50px 8%;
+}
+
+.active{
+    display:block;
+}
+
+/* HOME */
+
+.hero{
+    height:80vh;
+    background:url('https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1200&auto=format&fit=crop') center/cover;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero-content{
+    background:rgba(0,0,0,0.5);
+    color:white;
+    padding:40px;
+    border-radius:15px;
+}
+
+.hero-content h1{
+    font-size:55px;
+    margin-bottom:20px;
+}
+
+.hero-content p{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.hero-content button{
+    padding:12px 30px;
+    border:none;
+    background:#ff914d;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* PRODUCTS */
+
+.products h1{
+    text-align:center;
+    margin-bottom:40px;
+    color:#333;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+    text-align:center;
+}
+
+.card-content h3{
+    margin-bottom:10px;
+}
+
+.price{
+    color:#ff914d;
+    font-size:22px;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+.card-content button{
+    padding:10px 20px;
+    border:none;
+    background:#ff914d;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* ABOUT */
+
+.about{
+    text-align:center;
+}
+
+.about h1{
+    font-size:45px;
+    margin-bottom:25px;
+}
+
+.about p{
+    font-size:22px;
+    line-height:40px;
+    color:#555;
+}
+
+/* CONTACT */
+
+.contact h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+form{
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin:12px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+form button{
+    padding:12px 25px;
+    border:none;
+    background:#ff914d;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    header{
+        flex-direction:column;
+    }
+
+    nav{
+        margin-top:10px;
+    }
+
+    nav a{
+        display:inline-block;
+        margin:8px;
+    }
+
+    .hero-content h1{
+        font-size:38px;
+    }
+
+    .cart-box{
+        width:90%;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="logo">
+<i class="fa-solid fa-paw"></i> PawMart
+</div>
+
+<nav>
+<a href="#" onclick="showPage('home')">Home</a>
+<a href="#" onclick="showPage('products')">Products</a>
+<a href="#" onclick="showPage('about')">About</a>
+<a href="#" onclick="showPage('contact')">Contact</a>
+</nav>
+
+<div class="cart-icon" onclick="toggleCart()">
+🛒 Cart (<span id="cart-count">0</span>)
+</div>
+
+</header>
+
+<!-- CART -->
+
+<div class="cart-box" id="cartBox">
+
+<div class="cart-header">
+<h2>Your Cart</h2>
+<span onclick="toggleCart()">✖</span>
+</div>
+
+<div id="cart-items"></div>
+
+</div>
+
+<!-- HOME PAGE -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<div class="hero-content">
+<h1>Welcome To PawMart</h1>
+<p>Best Pet Products For Your Lovely Pets</p>
+<button onclick="showPage('products')">
+Shop Now
+</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCTS PAGE -->
+
+<section id="products" class="page products">
+
+<h1>Popular Pet Products</h1>
+
+<div class="product-grid">
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8HaKJkCHCnR0N3-r24A4ALcOAX57A3ySEyQ&s">
+
+<div class="card-content">
+<h3>Dog Food</h3>
+<p>Healthy food for dogs.</p>
+<div class="price">₹799</div>
+
+<button onclick="addToCart('Dog Food',799)">
+Add to Cart
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4axoP-ujRjIjoI8rvSA9oFsOo3HwTCe4uEg&s">
+
+<div class="card-content">
+<h3>Cat Toy</h3>
+<p>Ropes</p>
+<div class="price">₹299</div>
+
+<button onclick="addToCart('Cat Toy',299)">
+Add to Cart
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDUkTTc0NEMaqt8V8tcqoFeSUBIl0gNcpifQ&s">
+
+<div class="card-content">
+<h3>Dog Bed</h3>
+<p>Soft pet sleeping bed.</p>
+<div class="price">₹1499</div>
+
+<button onclick="addToCart('Dog Bed',1499)">
+Add to Cart
+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6QwZGXF3XsSYyNllZwUzyBi0ECG8qt0J1Qg&s">
+
+<div class="card-content">
+<h3>Pet Shampoo</h3>
+<p>Fresh and clean pets.</p>
+<div class="price">₹499</div>
+
+<button onclick="addToCart('Pet Shampoo',499)">
+Add to Cart
+</button>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT PAGE -->
+
+<section id="about" class="page about">
+
+<h1>About PawMart</h1>
+
+<p>
+PawMart is an online pet products store that provides
+high-quality food, toys, grooming items, and accessories
+for your lovely pets. We deliver happiness and care
+for every pet family.
+</p>
+
+</section>
+
+<!-- CONTACT PAGE -->
+
+<section id="contact" class="page contact">
+
+<h1>Contact Us</h1>
+
+<form>
+
+<input type="text" placeholder="Enter Your Name">
+
+<input type="email" placeholder="Enter Your Email">
+
+<textarea rows="5" placeholder="Enter Message"></textarea>
+
+<button type="submit">
+Send Message
+</button>
+
+</form>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+<p>© 2026 PawMart | All Rights Reserved</p>
+</footer>
+
+<script>
+
+/* PAGE NAVIGATION */
+
+function showPage(pageId){
+
+    let pages = document.querySelectorAll('.page');
+
+    pages.forEach(function(page){
+        page.classList.remove('active');
+    });
+
+    document.getElementById(pageId)
+    .classList.add('active');
+}
+
+/* CART */
+
+let cart = [];
+
+function addToCart(name, price){
+
+    cart.push({name, price});
+
+    displayCart();
+}
+
+function displayCart(){
+
+    let cartItems =
+    document.getElementById("cart-items");
+
+    let cartCount =
+    document.getElementById("cart-count");
+
+    cartItems.innerHTML = "";
+
+    cart.forEach((item,index)=>{
+
+        cartItems.innerHTML += `
+
+        <div class="cart-item">
+
+            <div>
+                <h4>${item.name}</h4>
+                <p>₹${item.price}</p>
+            </div>
+
+            <button onclick="removeItem(${index})">
+            ✖
+            </button>
+
+        </div>
+
+        `;
+    });
+
+    cartCount.innerText = cart.length;
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    displayCart();
+}
+
+function toggleCart(){
+
+    document.getElementById("cartBox")
+    .classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>
